@@ -12,11 +12,23 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
   # 名がなければ無効な状態であること
-  it "is invalid without a first name"
+  it "is invalid without a first name" do
+    user = User.new(first_name: nil)
+    user.valid?
+    expect(user.errors[:first_name]).to include("can't be blank")
+  end
   # 姓がなければ無効な状態であること
-  it "is invalid without a last name"
+  it "is invalid without a last name" do
+    user = User.new(last_name: nil)
+    user.valid?
+    expect(user.errors[:last_name]).to include("can't be blank")
+  end
   # メールアドレスがなければ無効な状態であること
-  it "is invalid without an email address"
+  it "is invalid without an email address" do
+    user = User.new(email: nil)
+    user.valid?
+    expect(user.errors[:email]).to include("can't be blank")
+  end
   # 重複したメールアドレスなら無効な状態であること
   it "is invalid without a duplicate email address"
   # ユーザーのフルネームを文字列として返すこと
