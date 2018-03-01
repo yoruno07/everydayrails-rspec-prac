@@ -27,6 +27,12 @@ RSpec.describe Project, type: :model do
     expect(project.errors[:name]).to include("can't be blank")
   end
 
+  # たくさんのメモが付いていること
+  it "can have many notes" do
+    project = FactoryBot.create(:project, :with_notes)
+    expect(project.notes.length).to eq 5
+  end
+
   # プロジェクト名の重複テスト
   describe "project name test when user create " do
     # 同ユーザーで重複する時
