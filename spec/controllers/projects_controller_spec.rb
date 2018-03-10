@@ -38,6 +38,32 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+
+  describe "#new" do
+    # 認証済みのユーザーとして
+    context "as an anthenticated user" do
+      before do
+        @user = FactoryBot.create(:user)
+      end
+
+      # 正常にレスポンスを返すこと
+      it "responds successfully" do
+        sign_in @user
+        get :new
+        expect(response).to be_success
+      end
+    end
+
+    # ゲストとして
+    context "as a guest" do
+      # サインイン画面にリダイレクトすること
+      it "redirets to the sign-in page" do
+        get :new
+        expect(response).to redirect_to "/users/sign_in"
+      end
+    end
+  end
+
   describe "#show" do
     # 認可されたユーザーとして
     context "as an authorized user" do
@@ -115,6 +141,52 @@ RSpec.describe ProjectsController, type: :controller do
       it "redirets to the sign-in page" do
         project_params = FactoryBot.attributes_for(:project)
         post :create, params: {project: project_params}
+        expect(response).to redirect_to "/users/sign_in"
+      end
+    end
+  end
+
+  describe "#edit" do
+    # 認可されたユーザーとして
+    context "as an authorized user" do
+      before do
+        @user = FactoryBot.create(:user)
+        @project = FactoryBot.create(:project, owner: @user)
+      end
+
+      # 正常にレスポンスを返すこと
+      it "responds successfully" do
+        sign_in @user
+        get :edit, params: {id: @project.id}
+        expect(response).to be_success
+      end
+    end
+
+    # 認可されていないユーザーとして
+    context "as an unauthorized user" do
+      before do
+        @user = FactoryBot.create(:user)
+        other_user = FactoryBot.create(:user)
+        @project = FactoryBot.create(:project, owner: other_user)
+      end
+
+      # ダッシュボードにリダイレクトすること
+      it "redirets to the dashboard" do
+        sign_in @user
+        get :edit, params: {id: @project.id}
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    # ゲストとして
+    context "as a guest" do
+      before do
+        @project = FactoryBot.create(:project)
+      end
+
+      # サインイン画面にリダイレクトすること
+      it "redirets to the sign-in page" do
+        get :edit, params: {id: @project.id}
         expect(response).to redirect_to "/users/sign_in"
       end
     end
