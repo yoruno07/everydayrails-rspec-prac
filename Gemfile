@@ -19,6 +19,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13.0'
   gem 'launchy', '~> 2.4.3'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper', '~> 1.1.0'
   gem 'rspec-rails', '~> 3.7.0'
   gem 'factory_bot_rails', '~> 4.8.0'
 end
