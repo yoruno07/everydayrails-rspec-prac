@@ -26,4 +26,27 @@ RSpec.feature "Tasks", type: :feature do
     expect(page).to_not have_css "label#task_#{task.id}.completed"
     expect(task.reload).to_not be_completed
   end
+
+  # ユーザーがタスクを追加する
+  scenario "user add tasks" do
+    user = FactoryBot.create(:user)
+    visit root_path
+    click_link "Sign in"
+    fill_in "Email", with: user.email
+    fill_in "Password", with: user.password
+    click_button "Log in"
+
+    click_link "New Project"
+    fill_in "Name", with: "test project"
+    fill_in "Description", with: "to rpec test"
+    click_button "Create Project"
+
+    expect {
+      visit root_path
+      click_link "test project"
+      click_link "Add Task"
+      fill_in "Name", with: "test task"
+      click_button "Create Task"
+    }.to change(Task, :count).by(1)
+  end
 end
