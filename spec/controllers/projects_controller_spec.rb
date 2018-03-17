@@ -119,7 +119,7 @@ RSpec.describe ProjectsController, type: :controller do
       # 無効な属性値の場合
       context "with invalid attributes" do
         # プロジェクトを追加できないこと
-        it "does not add ad project" do
+        it "does not add a project" do
           project_params = FactoryBot.attributes_for(:project, :invalid)
           sign_in @user
           expect {
