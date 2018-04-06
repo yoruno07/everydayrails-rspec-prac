@@ -44,12 +44,10 @@ RSpec.feature "Projects", type: :feature do
     end
   end
 
-  # 名前を入力する
   def fill_in_name(with)
     fill_in "Name", with: with
   end
 
-  # 説明を入力する
   def fill_in_description(with)
     fill_in "Description", with: with
   end
