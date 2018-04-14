@@ -22,6 +22,9 @@ group :development, :test do
   gem 'chromedriver-helper', '~> 1.1.0'
   gem 'rspec-rails', '~> 3.7.0'
   gem 'factory_bot_rails', '~> 4.8.0'
+  gem 'shoulda-matchers',
+    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+    branch: 'rails-5'
 end
 
 group :development do
