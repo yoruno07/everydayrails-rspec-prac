@@ -30,35 +30,8 @@ RSpec.describe Project, type: :model do
 
   # プロジェクト名の重複テスト
   describe "project name test when user create " do
-    # 同ユーザーで重複する時
-    context "same user create same name of project" do
     # ユーザー単位では重複したプロジェクト名を許可しないこと
-      it "does not allow duplicate project names per user" do
-        @user.projects.create(
-          name: "Test Project"
-          )
-        new_project = @user.projects.build(
-          name: "Test Project",
-          )
-        new_project.valid?
-        expect(new_project.errors[:name]).to include("has already been taken")
-      end
-    end
-
-    # 別ユーザーで重複する時
-    context "other user create same name of project" do
-      # 二人のユーザーが同じ名前を使うことは許可すること
-      it "allows two users to share a project name" do
-        @user.projects.create(
-          name: "Test Project",
-          )
-        other_user = FactoryBot.create(:user)
-        other_project = other_user.projects.build(
-          name: "Test Project",
-          )
-        expect(other_project).to be_valid
-      end
-    end
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
   end
 
   # 遅延ステータス
