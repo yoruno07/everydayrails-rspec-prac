@@ -16,11 +16,7 @@ RSpec.describe Project, type: :model do
   end
 
   # プロジェクト名がなければ無効な状態であること
-  it "is invalid without a name" do
-    project = Project.new(name: nil)
-    project.valid?
-    expect(project.errors[:name]).to include("can't be blank")
-  end
+  it { is_expected.to validate_presence_of :name }
 
   # たくさんのメモが付いていること
   it "can have many notes" do
