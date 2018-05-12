@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
   end
 
   # ジオコーディングを実行すること
-  it "performs geocoding" do
+  it "performs geocoding", vcr: true do
     user = FactoryBot.create(:user, last_sign_in_ip: "161.185.207.20")
     expect {
       user.geocode
