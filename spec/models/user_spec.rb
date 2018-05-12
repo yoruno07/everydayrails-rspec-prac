@@ -26,4 +26,14 @@ RSpec.describe User, type: :model do
     user = FactoryBot.create(:user)
     expect(UserMailer).to have_received(:welcome_email).with(user)
   end
+
+  # ジオコーディングを実行すること
+  it "performs geocoding" do
+    user = FactoryBot.create(:user, last_sign_in_ip: "161.185.207.20")
+    expect {
+      user.geocode
+    }.to change(user, :location).
+      from(nil).
+      to("Brooklyn, New York, United States")
+  end
 end
