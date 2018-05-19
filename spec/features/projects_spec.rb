@@ -83,7 +83,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   # 完了済みのプロジェクトも含めて表示する
-  scenario "visible all project", :focus do
+  scenario "visible all project" do
     user = FactoryBot.create(:user)
     project = FactoryBot.create(:project, owner: user)
     completed_project = FactoryBot.create(:project, owner: user, completed: true)
