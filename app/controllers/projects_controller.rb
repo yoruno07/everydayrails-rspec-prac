@@ -5,7 +5,13 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects.where(completed: nil)
+    with_completed = params[:visible] == 'all' ? true : false
+    user_projects = current_user.projects
+    if with_completed
+      @projects = user_projects
+    else
+      @projects = user_projects.where(completed: nil)
+    end
   end
 
   # GET /projects/1

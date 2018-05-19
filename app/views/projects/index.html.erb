@@ -6,7 +6,13 @@
     New Project
   <% end %>
 </h1>
-
+<%= link_to projects_path(visible: :all) do %>
+  disp completed project
+<% end %>
+<br />
+<%= link_to projects_path do %>
+  hide completed project
+<% end %>
 
 <% @projects.each do |project| %>
   <h2><%= link_to project.name, project %></h2>

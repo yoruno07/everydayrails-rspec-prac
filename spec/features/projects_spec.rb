@@ -71,7 +71,7 @@ RSpec.feature "Projects", type: :feature do
 
 
   # 完了済みのプロジェクトはダッシュボードに表示されない
-  scenario "completed project is not visible on dashboard", :focus do
+  scenario "completed project is not visible on dashboard" do
     user = FactoryBot.create(:user)
     project = FactoryBot.create(:project, owner: user)
     completed_project = FactoryBot.create(:project, owner: user, completed: true)
@@ -80,5 +80,17 @@ RSpec.feature "Projects", type: :feature do
     visit projects_path
     expect(page).to have_content project.name
     expect(page).to_not have_content completed_project.name
+  end
+
+  # 完了済みのプロジェクトも含めて表示する
+  scenario "visible all project", :focus do
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, owner: user)
+    completed_project = FactoryBot.create(:project, owner: user, completed: true)
+    login_as user, scope: :user
+
+    visit projects_path(visible: :all)
+    expect(page).to have_content project.name
+    expect(page).to have_content completed_project.name
   end
 end
