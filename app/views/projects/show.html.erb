@@ -4,10 +4,17 @@
     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     Edit
   <% end %>
-  <button class="btn btn-default btn-s btn-inline">
-    <span class="glyphicon glyphicon-ok aria-hidden="true"></span>
-    Complete
-  </button>
+  <% if @project.completed? %>
+    <span class="label label-success">Completed</span>
+  <% else %>
+    <%= button_to complete_project_path(@project),
+        method: :patch,
+        form: { style: "display:inline-block;" },
+        class: "btn btn-default btn-s btn-inline" do %>
+      <span class="glyphicon glyphicon-ok aria-hidden="true"></span>
+      Complete
+    <% end %>
+  <% end %>
 </h1>
 
 <div class="project-description">
